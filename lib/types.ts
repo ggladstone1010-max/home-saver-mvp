@@ -1,0 +1,11 @@
+export type AustralianState="NSW"|"VIC"|"QLD"|"WA"|"SA"|"TAS"|"ACT"|"NT";
+export type UserProfile={firstName:string;lastName:string;email:string;mobile:string;ageRange:string;state:AustralianState|"";referralSource:string};
+export type FinancialProfile={currentSavings:number;monthlySavings:number;householdIncome:number;monthlyExpenses:number;monthlyDebtRepayments:number;buyingWithSomeone:boolean};
+export type HomeGoal={targetPrice:number;timeframe:string;firstHomeBuyer:boolean;targetDate:string};
+export type PropertyPreference={suburbs:string[];propertyType:string;bedrooms:number;condition:string};
+export type BrokerConnection={mode:"none"|"existing"|"introduction";name:string;company:string;email:string;phone:string;consent:boolean;shareContact:boolean};
+export type FundExpressionOfInterest={interested:boolean;amount:number;availableDate:string;horizon:string;priorityNotification:boolean;submitted:boolean};
+export type SavingsContribution={id:string;month:string;amount:number};
+export type Property={id:number;suburb:string;state:AustralianState;address:string;price:number;type:string;beds:number;baths:number;parking:number;condition:string;description:string;benefit:string;image:string};
+export type PropertyEnquiry={propertyId:number;createdAt:string};
+export type DemoState={user:UserProfile;financial:FinancialProfile;goal:HomeGoal;preference:PropertyPreference;broker:BrokerConnection;fund:FundExpressionOfInterest;contributions:SavingsContribution[];savedPropertyIds:number[];enquiries:PropertyEnquiry[];onboardingStep:number;completed:boolean;notifications:{savings:boolean;properties:boolean;broker:boolean}};

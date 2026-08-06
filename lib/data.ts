@@ -1,29 +1,20 @@
-export const user = {
-  name: "Alex Morgan", firstName: "Alex", email: "alex.morgan@email.com", age: 29,
-  state: "Victoria", savings: 68400, monthlySavings: 3200, targetDeposit: 120000,
-  purchasePrice: 800000, targetDate: "October 2027", suburbs: ["Brunswick", "Coburg", "Preston"],
-};
-
-export const savingsHistory = [
-  { month: "Feb", value: 44200 }, { month: "Mar", value: 48100 },
-  { month: "Apr", value: 52400 }, { month: "May", value: 57600 },
-  { month: "Jun", value: 62300 }, { month: "Jul", value: 68400 },
+import type { DemoState,Property } from "./types";
+export const properties:Property[]=[
+{id:1,suburb:"Coburg",state:"VIC",address:"18 Bell Street",price:775000,type:"House",beds:3,baths:2,parking:1,condition:"Established",description:"A light-filled period home close to trains, parks and Sydney Road.",benefit:"First Home Owner Grant eligibility to be confirmed",image:"/property-1.svg"},
+{id:2,suburb:"Preston",state:"VIC",address:"42 Oakover Road",price:790000,type:"Townhouse",beds:3,baths:2,parking:1,condition:"New build",description:"Low-maintenance townhouse with a private courtyard and strong transport links.",benefit:"Stamp duty concession placeholder",image:"/property-2.svg"},
+{id:3,suburb:"Brunswick",state:"VIC",address:"7 Lygon Place",price:815000,type:"House",beds:3,baths:1,parking:1,condition:"Established",description:"Character home in a walkable pocket near cafés and tram connections.",benefit:"First-home buyer concession placeholder",image:"/property-3.svg"},
+{id:4,suburb:"Parramatta",state:"NSW",address:"16 River Avenue",price:745000,type:"Apartment",beds:2,baths:2,parking:1,condition:"New build",description:"Modern apartment near the CBD, river walks and major rail connections.",benefit:"NSW first-home support eligibility to be confirmed",image:"/property-2.svg"},
+{id:5,suburb:"Chermside",state:"QLD",address:"9 Hamilton Road",price:685000,type:"Townhouse",beds:3,baths:2,parking:2,condition:"Established",description:"Spacious townhouse with easy access to retail, hospitals and transport.",benefit:"Queensland concession placeholder",image:"/property-1.svg"},
+{id:6,suburb:"Baldivis",state:"WA",address:"24 Tuart Crescent",price:620000,type:"House",beds:4,baths:2,parking:2,condition:"New build",description:"Family-sized home with contemporary finishes and a generous backyard.",benefit:"WA first-home grant placeholder",image:"/property-3.svg"},
+{id:7,suburb:"Bowden",state:"SA",address:"5 Third Street",price:710000,type:"Townhouse",beds:3,baths:2,parking:1,condition:"New build",description:"Architect-designed townhouse minutes from the city and parklands.",benefit:"SA first-home support eligibility to be confirmed",image:"/property-2.svg"},
+{id:8,suburb:"Werribee",state:"VIC",address:"33 Synnot Street",price:650000,type:"House",beds:3,baths:2,parking:2,condition:"Established",description:"Well-kept family home close to schools, shops and the train station.",benefit:"Victorian first-home concession placeholder",image:"/property-1.svg"},
 ];
-
-export const properties = [
-  { id:1, suburb:"Coburg, VIC", address:"18 Bell Street", price:775000, type:"House", beds:3, baths:2, parking:1, match:96, reason:"Preferred suburb, ideal bedroom count and under your target price.", image:"/property-1.svg", tag:"Best match" },
-  { id:2, suburb:"Preston, VIC", address:"42 Oakover Road", price:790000, type:"Townhouse", beds:3, baths:2, parking:1, match:93, reason:"Close to budget with the space and established character you prefer.", image:"/property-2.svg", tag:"Great fit" },
-  { id:3, suburb:"Brunswick, VIC", address:"7 Lygon Place", price:795000, type:"House", beds:3, baths:1, parking:1, match:91, reason:"Top-choice location and within 1% of your target property price.", image:"/property-3.svg", tag:"Top suburb" },
-  { id:4, suburb:"Pascoe Vale, VIC", address:"31 Gaffney Street", price:760000, type:"Townhouse", beds:3, baths:2, parking:2, match:89, reason:"Nearby value option with three bedrooms and room in your budget.", image:"/property-2.svg", tag:"Good value" },
-  { id:5, suburb:"Reservoir, VIC", address:"12 Springview Avenue", price:735000, type:"House", beds:3, baths:2, parking:1, match:86, reason:"More deposit headroom while retaining your preferred property style.", image:"/property-1.svg", tag:"Budget friendly" },
-  { id:6, suburb:"Thornbury, VIC", address:"5 Miller Grove", price:815000, type:"House", beds:3, baths:2, parking:1, match:84, reason:"Strong lifestyle match and close to your preferred suburbs.", image:"/property-3.svg", tag:"Lifestyle match" },
+export function propertyScore(property:Property,state:DemoState){let score=62;const priceDiff=Math.abs(property.price-state.goal.targetPrice)/Math.max(1,state.goal.targetPrice);score+=Math.max(0,18-Math.round(priceDiff*30));if(state.preference.suburbs.some(x=>x.toLowerCase()===property.suburb.toLowerCase()))score+=12;if(property.type===state.preference.propertyType)score+=8;if(property.beds>=state.preference.bedrooms)score+=5;if(state.preference.condition==="Either"||property.condition===state.preference.condition)score+=5;return Math.min(99,score)}
+export const navItems=[{href:"/dashboard",label:"Dashboard",icon:"home"},{href:"/my-plan",label:"My Plan",icon:"chart"},{href:"/property-matches",label:"Properties",icon:"building"},{href:"/investment-pledge",label:"Fund Interest",icon:"sparkle"},{href:"/mortgage-broker",label:"Broker",icon:"users"},{href:"/profile",label:"Profile",icon:"user"}] as const;
+export const adminUsers=[
+{name:"Alex Morgan",deposit:68400,target:800000,timeframe:"12–18 months",suburbs:"Brunswick, Coburg",broker:"Not connected",fund:10000,source:"Social media"},
+{name:"Priya Shah",deposit:92000,target:950000,timeframe:"6–12 months",suburbs:"Parramatta, Ryde",broker:"Introduction",fund:25000,source:"Google search"},
+{name:"Liam Chen",deposit:51000,target:680000,timeframe:"Within 6 months",suburbs:"Chermside, Nundah",broker:"Linked",fund:0,source:"Friend or family"},
+{name:"Sophie Nguyen",deposit:117000,target:870000,timeframe:"12–18 months",suburbs:"Preston, Thornbury",broker:"Linked",fund:40000,source:"Brickfloor"},
+{name:"Noah Williams",deposit:43000,target:640000,timeframe:"2+ years",suburbs:"Baldivis, Wellard",broker:"Not connected",fund:5000,source:"Mortgage broker"},
 ];
-
-export const navItems = [
-  { href: "/dashboard", label: "Dashboard", icon: "home" },
-  { href: "/deposit-tracker", label: "My Plan", icon: "chart" },
-  { href: "/property-matches", label: "Properties", icon: "building" },
-  { href: "/investment-pledge", label: "Fund Interest", icon: "sparkle" },
-  { href: "/mortgage-broker", label: "Broker", icon: "users" },
-  { href: "/profile", label: "Profile", icon: "user" },
-] as const;

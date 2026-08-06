@@ -1,9 +1,9 @@
 "use client";
-import { createContext, useContext, useEffect, useState } from "react";
-import { BROKER_KEY, BrokerDetails, defaultBroker, defaultFund, defaultProfile, DemoProfile, FUND_KEY, FundInterest, PROFILE_KEY } from "@/lib/demo";
-
-type DemoContextValue={profile:DemoProfile;fund:FundInterest;broker:BrokerDetails;ready:boolean;saveProfile:(v:DemoProfile)=>void;saveFund:(v:FundInterest)=>void;saveBroker:(v:BrokerDetails)=>void;reset:()=>void};
+import { createContext,useContext,useEffect,useState } from "react";
+import { defaultState } from "@/lib/demo";
+import { demoStorage } from "@/lib/storage";
+import type { DemoState } from "@/lib/types";
+type DemoContextValue={state:DemoState;ready:boolean;update:(patch:Partial<DemoState>)=>void;replace:(state:DemoState)=>void;reset:()=>void};
 const DemoContext=createContext<DemoContextValue|null>(null);
-function read<T>(key:string,fallback:T){try{const value=localStorage.getItem(key);return value?JSON.parse(value) as T:fallback}catch{return fallback}}
-export function DemoProvider({children}:{children:React.ReactNode}){const [profile,setProfile]=useState(defaultProfile),[fund,setFund]=useState(defaultFund),[broker,setBroker]=useState(defaultBroker),[ready,setReady]=useState(false);useEffect(()=>{const timer=window.setTimeout(()=>{setProfile(read(PROFILE_KEY,defaultProfile));setFund(read(FUND_KEY,defaultFund));setBroker(read(BROKER_KEY,defaultBroker));setReady(true)},0);return()=>window.clearTimeout(timer)},[]);const saveProfile=(v:DemoProfile)=>{setProfile(v);localStorage.setItem(PROFILE_KEY,JSON.stringify(v))};const saveFund=(v:FundInterest)=>{setFund(v);localStorage.setItem(FUND_KEY,JSON.stringify(v))};const saveBroker=(v:BrokerDetails)=>{setBroker(v);localStorage.setItem(BROKER_KEY,JSON.stringify(v))};const reset=()=>{localStorage.removeItem(PROFILE_KEY);localStorage.removeItem(FUND_KEY);localStorage.removeItem(BROKER_KEY);setProfile(defaultProfile);setFund(defaultFund);setBroker(defaultBroker)};return <DemoContext.Provider value={{profile,fund,broker,ready,saveProfile,saveFund,saveBroker,reset}}>{children}</DemoContext.Provider>}
+export function DemoProvider({children}:{children:React.ReactNode}){const[state,setState]=useState(defaultState),[ready,setReady]=useState(false);useEffect(()=>{const timer=window.setTimeout(()=>{setState(demoStorage.load(defaultState));setReady(true)},0);return()=>window.clearTimeout(timer)},[]);const replace=(next:DemoState)=>{setState(next);demoStorage.save(next)};const update=(patch:Partial<DemoState>)=>replace({...state,...patch});const reset=()=>{demoStorage.clear();setState(defaultState)};return <DemoContext.Provider value={{state,ready,update,replace,reset}}>{children}</DemoContext.Provider>}
 export function useDemo(){const value=useContext(DemoContext);if(!value)throw new Error("useDemo must be used within DemoProvider");return value}

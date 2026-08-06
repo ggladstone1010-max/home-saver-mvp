@@ -1,1 +1,1 @@
-import { PreferencesView } from "@/components/views"; export default function Page(){return <PreferencesView/>}
+import {redirect} from "next/navigation";export default function Page(){redirect("/my-plan")}

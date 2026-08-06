@@ -1,0 +1,1 @@
+import {PropertyDetail} from "@/components/property-detail";export default async function Page({params}:PageProps<"/property-matches/[id]">){const{id}=await params;return <PropertyDetail id={Number(id)}/>}
