@@ -1,1 +1,1 @@
-import { MatchesView } from "@/components/views"; export default function Page(){return <MatchesView/>}
+import {CustomerPropertyFeed} from "@/components/property-feed";export default function Page(){return <CustomerPropertyFeed/>}

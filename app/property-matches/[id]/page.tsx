@@ -1,1 +1,1 @@
-import {PropertyDetail} from "@/components/property-detail";export default async function Page({params}:PageProps<"/property-matches/[id]">){const{id}=await params;return <PropertyDetail id={Number(id)}/>}
+import {OpportunityDetail} from "@/components/opportunity-views";export default async function Page({params}:PageProps<"/property-matches/[id]">){const{id}=await params;return <OpportunityDetail id={Number(id)}/>}

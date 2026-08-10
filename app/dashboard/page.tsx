@@ -1,1 +1,1 @@
-import { DashboardView } from "@/components/views"; export default function Page(){return <DashboardView/>}
+import {CustomerDashboard} from "@/components/customer-dashboard";export default function Page(){return <CustomerDashboard/>}

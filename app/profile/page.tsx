@@ -1,1 +1,1 @@
-import { ProfileView } from "@/components/views"; export default function Page(){return <ProfileView/>}
+import {AdviserProfile} from "@/components/adviser-profile";export default function Page(){return <AdviserProfile/>}

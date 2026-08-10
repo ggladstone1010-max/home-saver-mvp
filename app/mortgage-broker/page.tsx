@@ -1,1 +1,1 @@
-import { BrokerView } from "@/components/views"; export default function Page(){return <BrokerView/>}
+import {redirect} from "next/navigation";export default function Page(){redirect("/advisers")}
