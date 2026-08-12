@@ -1,0 +1,1 @@
+import {AdminPropertyForm} from "@/components/admin-property-form";export default async function Page({params}:PageProps<"/admin/properties/[id]/edit">){const{id}=await params;return <AdminPropertyForm id={id}/>}

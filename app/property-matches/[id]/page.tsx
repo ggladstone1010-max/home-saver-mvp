@@ -1,1 +1,2 @@
-import {OpportunityDetail} from "@/components/opportunity-views";export default async function Page({params}:PageProps<"/property-matches/[id]">){const{id}=await params;return <OpportunityDetail id={Number(id)}/>}
+import {notFound} from "next/navigation";import {PropertyDetail} from "@/components/property-detail";import {getPropertyById} from "@/lib/properties/propertyService";
+export default async function Page({params}:PageProps<"/property-matches/[id]">){const{id}=await params;let property=null,failed=false;try{property=await getPropertyById(id)}catch{failed=true}if(failed)return <PropertyDetail error/>;if(!property)notFound();return <PropertyDetail property={property}/>}

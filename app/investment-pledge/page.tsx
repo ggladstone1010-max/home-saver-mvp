@@ -1,1 +1,1 @@
-import { PledgeView } from "@/components/views"; export default function Page(){return <PledgeView/>}
+import {FundInterestPage} from "@/components/fund-interest";export default function Page(){return <FundInterestPage/>}

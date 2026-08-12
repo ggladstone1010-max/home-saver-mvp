@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { DemoProvider } from "@/components/demo-provider";
+import { PropertyProvider } from "@/components/property-provider";
 
 export const metadata: Metadata = {
   title: { default: "Home Saver", template: "%s | Home Saver" },
@@ -13,7 +14,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en-AU"
       className="h-full antialiased"
     >
-      <body className="min-h-full"><DemoProvider>{children}</DemoProvider></body>
+      <body className="min-h-full"><DemoProvider><PropertyProvider>{children}</PropertyProvider></DemoProvider></body>
     </html>
   );
 }

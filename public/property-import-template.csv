@@ -1,0 +1,2 @@
+inventory_type,market_status,title,address,suburb,state,postcode,price_guide,mpg_floor_price,developer_name,developer_project_name,bedrooms,bathrooms,car_spaces,property_type,new_or_established,expected_market_date,auction_date,hero_image_url,description,is_active
+NEW_DEVELOPMENT,COMING_SOON,DEMO - New Development,10 Example Street,Preston,VIC,3072,735000,,Demo Developer,Demo Project,3,2,1,Townhouse,New,2026-12-01,,https://example.com/property.jpg,Clearly fake CSV demonstration record,true

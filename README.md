@@ -36,3 +36,13 @@ npm run dev
 npm run lint
 npm run build
 ```
+
+## Real property inventory
+
+Property inventory now comes from Supabase rather than hard-coded demo data. The workflow is:
+
+`Admin → Add property → Activate → Home Saver automatically applies the existing matching engine.`
+
+Use `/admin/properties` for manual management or `/admin/properties/import` with the downloadable CSV template. External Domain, REA and listing feeds remain future integrations. Production does not silently fall back to fixtures; a development-only fallback must be explicitly enabled.
+
+Required variables are documented in `.env.example`. Follow [docs/SUPABASE_SETUP.md](docs/SUPABASE_SETUP.md) for setup, SQL migration, Vercel configuration and first-property verification.

@@ -38,6 +38,7 @@ export function AdviserProfile() {
         <p className="privacy-note">Detailed expenses, unrelated debts and private notes are not included in adviser updates.</p>
       </Card>
       <div className="form-actions">
+        <button className="button button-secondary" onClick={() => replace({ ...state, demoScenario: state.demoScenario === "FUND_BALANCE" ? "CASH_ONLY" : "FUND_BALANCE", financial: { ...state.financial, currentSavings: state.demoScenario === "FUND_BALANCE" ? 50000 : 40000 }, fund: { ...state.fund, fundBalance: state.demoScenario === "FUND_BALANCE" ? 0 : 10000, interested: state.demoScenario !== "FUND_BALANCE", submitted: state.demoScenario !== "FUND_BALANCE" }, fundInterestStatus: state.demoScenario === "FUND_BALANCE" ? "INTERESTED" : "INTERESTED" })}>Show {state.demoScenario === "FUND_BALANCE" ? "cash-only" : "fund-balance"} demo</button>
         <button className="button reset-button" onClick={() => { if (window.confirm("Reset all demo data?")) { reset(); router.push("/"); } }}>Reset demo</button>
         <button className="button button-secondary" onClick={() => router.push("/")}>Sign out</button>
       </div>
