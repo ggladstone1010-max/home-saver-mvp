@@ -14,8 +14,9 @@ create table if not exists public.properties (
  source_partner_id text, external_reference text, internal_notes text, created_by text
 );
 create index if not exists properties_state_idx on public.properties(state);create index if not exists properties_suburb_idx on public.properties(suburb);create index if not exists properties_inventory_idx on public.properties(inventory_type);create index if not exists properties_market_status_idx on public.properties(market_status);create index if not exists properties_active_idx on public.properties(is_active);
+create unique index if not exists properties_external_reference_unique_idx on public.properties(external_reference) where external_reference is not null;
 create or replace function public.set_updated_at() returns trigger language plpgsql as $$ begin new.updated_at=now();return new;end;$$;
 drop trigger if exists properties_set_updated_at on public.properties;create trigger properties_set_updated_at before update on public.properties for each row execute function public.set_updated_at();
 alter table public.properties enable row level security;
-drop policy if exists "Public can read active properties" on public.properties;create policy "Public can read active properties" on public.properties for select using (is_active=true);
+drop policy if exists "Public can read active properties" on public.properties;create policy "Public can read active properties" on public.properties for select to anon, authenticated using (is_active=true);
 -- Writes use the service-role client in protected Next.js route handlers. Never expose that key in a browser.
