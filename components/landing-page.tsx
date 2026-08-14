@@ -1,25 +1,138 @@
 "use client";
-import Link from "next/link";import {useEffect,useRef} from "react";import {Logo} from "./app-shell";import {Icon} from "./icons";import {trackEvent} from "@/lib/analytics";
 
-const journey=[
-  ["1","Set your home goal","Tell us where you want to buy, what you’re looking for and when you’d like to get there."],
-  ["2","See what’s realistically within reach","We combine your deposit, savings rate and indicative borrowing capacity to show what may fit now and over the next 9 months."],
-  ["3","Build your path there","Track your deposit and see how changes to your savings can bring more homes within reach sooner."],
-  ["4","Get access to properties you might not otherwise see","Discover matched opportunities across new developments, pre-market properties and selected Brickfloor opportunities."],
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect } from "react";
+import { trackEvent } from "@/lib/analytics";
+import { Logo } from "./app-shell";
+import { Icon } from "./icons";
+
+export const heroCopy = {
+  active: "A" as const,
+  variants: {
+    A: "Start getting exposure to property while you save for your own home.",
+    B: "Get started on the property ladder in around 9 minutes, not 9 years.",
+    C: "What if your home deposit could participate in the property market too?",
+  },
+};
+
+const steps = [
+  ["Create your Home Saver plan", "Tell us about your savings, savings rate, goals and the kind of home you’re working towards."],
+  ["Build your home goal assets", "Continue saving and, when available and appropriate, eligible users may choose residential-property exposure through the Brickfloor fund."],
+  ["Discover homes coming within reach", "See properties that may fit your deposit, savings trajectory and indicative borrowing capacity over approximately nine months."],
+  ["Move from saver to buyer", "When you’re ready, connect with the advisers you need and explore matched property opportunities."],
 ];
-const sources=[["New Developments","New homes supplied by participating developers and property partners."],["Pre-Market","Selected homes Brickfloor may know about before they are publicly listed."],["Brickfloor Opportunities","Selected properties where Brickfloor already has a commercial relationship with the property owner."]];
 
-export function LandingPage(){const propertySection=useRef<HTMLElement>(null);useEffect(()=>{trackEvent("landing_page_view");const node=propertySection.current;if(!node)return;const observer=new IntersectionObserver(([entry])=>{if(entry.isIntersecting){trackEvent("LANDING_PROPERTY_EXPLANATION_VIEWED");observer.disconnect()}},{threshold:.35});observer.observe(node);return()=>observer.disconnect()},[]);const start=()=>{trackEvent("start_plan");trackEvent("onboarding_started");trackEvent("LANDING_PRIMARY_CTA_CLICK");trackEvent("ONBOARDING_STARTED")};return <main className="welcome"><nav className="welcome-nav"><Logo/><Link href="/sign-in" onClick={()=>trackEvent("LANDING_SIGN_IN_CLICK")}>Sign in</Link></nav>
-  <section className="welcome-hero"><div className="welcome-copy"><span className="hero-kicker"><Icon name="sparkle" size={16}/>Home Saver by Brickfloor</span><h1>Saving for a home? <em>Start getting exposure to property now.</em></h1><p>Build a clear plan for your first home, see what may come within reach, and explore an optional way to gain property exposure while you save.</p><div className="hero-actions"><Link className="button button-primary" href="/onboarding" onClick={start}>Build my home plan <Icon name="arrow"/></Link><a className="button button-secondary" href="#how-it-works">See how it works</a></div><p className="hero-reassurance"><Icon name="shield" size={15}/>Takes around 3 minutes. Your information stays private and you control what is shared.</p></div><HeroVisual/></section>
-  <section className="landing-value"><div className="landing-heading"><span className="eyebrow">Three Home Saver benefits</span><h2>A clearer path into property</h2></div><div className="value-output-grid"><article><Icon name="wallet"/><small>Know where you stand</small><p>See what may be within reach now and how your buying position could change over the next 9 months.</p></article><article><Icon name="building"/><small>Get closer to property</small><p>Eligible users can choose to gain residential property exposure through the Brickfloor Fund while building towards their own home.</p></article><article><Icon name="home"/><small>Get access to opportunities</small><p>Discover matched new developments, pre-market homes and selected Brickfloor opportunities as they become relevant.</p></article></div></section>
-  <section className="property-exposure"><div><span className="eyebrow">An optional pathway</span><h2>Start participating in property before you can afford a whole home</h2><p>Saving a home deposit can take years. During that time, property prices can move too.</p><p>Eligible Home Saver members may choose to invest part of their savings in the Brickfloor Residential Fund, providing exposure to residential property while continuing to work towards buying a home of their own.</p><strong>Gain exposure to residential property while you’re saving for one of your own.</strong><Link className="button button-primary" href="/investment-pledge" onClick={()=>trackEvent("FUND_EXAMPLE_OPENED")}>See how it could work <Icon name="arrow"/></Link><small>Investing is optional and involves risk. Eligibility and fund terms apply.</small></div><div className="path-comparison"><article><Icon name="wallet"/><span className="eyebrow">Save</span><h3>Cash savings</h3><p>Continue building your deposit through cash savings.</p><div>Cash savings <b>→</b> Deposit grows <b>→</b> Home purchase</div></article><article><Icon name="building"/><span className="path-badge">Optional investment pathway</span><h3>Save + optional property investment</h3><p>Eligible users may choose to invest part of their savings in the Brickfloor Residential Fund while continuing to build their home deposit.</p><div>Cash + optional fund <b>→</b> Build home goal assets <b>→</b> Home purchase</div></article><small>Investment values can rise or fall and money invested may not be suitable for a near-term home purchase.</small></div></section>
-  <section className="landing-example"><div><span className="eyebrow">Illustrative example</span><h2>See how progress changes what may be possible</h2><p>Alex has:</p><ul><li><b>$68,400</b> saved</li><li><b>$2,200</b> monthly savings</li><li><b>$570,000</b> indicative borrowing capacity</li></ul></div><div className="example-timeline"><span><small>Today</small><b>6 homes</b><em>may be within reach</em></span><i/><span><small>In 6 months</small><b>11 homes</b><em>may be within reach</em></span><i/><span><small>In 9 months</small><b>15 homes</b><em>may be within reach</em></span></div><small>Illustrative example only. Property availability and borrowing capacity are not guaranteed.</small></section>
-  <section className="journey-landing"><span className="eyebrow">How Home Saver works</span><h2>From your goal to homes coming within reach</h2><div>{journey.map((step,index)=><article className={index===3?"reward":""} key={step[0]}>{index===3&&<b className="priority-badge">Priority access</b>}<span>{step[0]}</span><h3>{step[1]}</h3><p>{step[2]}</p></article>)}</div></section>
-  <section className="property-advantage" ref={propertySection}><div className="landing-heading"><span className="eyebrow">A broader view of the market</span><h2>More than a property search</h2><p>Home Saver doesn’t just show you listings. It matches your projected buying position with property opportunities that may become relevant as you get closer to buying.</p></div><div>{sources.map(([title,copy],index)=><article key={title}><span><Icon name={index===0?"building":index===1?"eye":"home"}/></span><h3>{title}</h3><p>{copy}</p></article>)}</div><p className="property-fit-note"><Icon name="check"/>We only show opportunities that may fit your projected buying position.</p></section>
-  <section className="priority-cta"><span className="eyebrow">Home Saver community</span><h2>Get priority access as opportunities emerge</h2><p>Join Home Saver now and be among the first to hear about selected new developments, pre-market homes and Brickfloor opportunities that match your buying position.</p><Link className="button button-primary" href="/onboarding" onClick={()=>{trackEvent("LANDING_PRIORITY_ACCESS_CLICK");trackEvent("ONBOARDING_STARTED")}}>Join Home Saver <Icon name="arrow"/></Link><small>Priority access is not guaranteed and opportunities may not always be available.</small></section>
-  <section className="landing-trust"><div><span className="privacy-mark"><Icon name="shield"/></span><span className="eyebrow">Privacy by design</span><h2>Your information, your control</h2><p>Your financial details are used to personalise your Home Saver experience.</p></div><div>{[["lock","Your personal information is not sold."],["users","You decide which advisers can see your progress."],["check","Introductions are only made with your permission."],["chart","Your financial details personalise your buying path."]].map(([icon,copy])=><p key={copy}><span><Icon name={icon}/></span>{copy}</p>)}</div></section>
-  <section className="brickfloor-credibility"><div><span className="eyebrow">Powered by Brickfloor</span><h2>Building a better residential property journey</h2><p>Brickfloor is building a better way for Australians to save, invest and move through the residential property market.</p></div><div className="placeholder-logos"><span>Approved awards asset placeholder</span><span>Approved media recognition placeholder</span><span>Approved strategic partner placeholder</span></div></section>
-  <footer className="landing-footer"><Logo/><p>Home Saver provides indicative planning information only. It is not financial, credit or property advice.</p><Link href="/onboarding" onClick={start}>See what’s within reach</Link></footer>
-  </main>}
+const benefits = [
+  ["building", "Property exposure", "An optional pathway to participate in residential property before you can afford an entire home."],
+  ["chart", "Your buying plan", "Track your deposit, savings trajectory and estimated buying position."],
+  ["home", "Homes coming within reach", "See selected properties matched to where your finances may be heading."],
+  ["users", "Your adviser network", "Keep your broker, buyer’s agent, financial adviser and other professionals available when you need them."],
+];
 
-function HeroVisual(){return <div className="hero-visual"><div className="house-scene"><div className="sun"/><div className="cloud one"/><div className="cloud two"/><div className="house"><div className="roof"/><div className="house-body"><span className="window"/><span className="door"/></div></div><div className="tree">●</div><div className="ground"/></div><div className="float-card savings"><span><Icon name="chart"/></span><div><small>Projected buying position</small><strong>$640,000</strong><i>Indicative today</i></div></div><div className="float-card match"><span><Icon name="home"/></span><div><small>Coming within reach</small><strong>15 homes</strong><i>9-month outlook</i></div></div></div>}
+const inventory = [
+  ["New Developments", "Selected new residential developments available through participating partners."],
+  ["Pre-Market", "Properties Brickfloor knows may be coming to market, potentially allowing eligible buyers to express interest earlier."],
+  ["Brickfloor Opportunities", "Properties where Brickfloor has a Market Price Guarantee relationship and a Home Saver buyer may have a relevant opportunity."],
+];
+
+const faqs = [
+  ["Is this a bank account?", "No. Home Saver is a planning experience. The future Brickfloor Residential Fund would be an investment product, not a bank account or cash deposit."],
+  ["Do I actually own a property?", "Not through the current Home Saver MVP. A future fund investment may provide exposure to a diversified residential-property portfolio, rather than ownership of an individual home."],
+  ["What does ‘property exposure’ mean?", "It means the value of an eligible future investment would be linked to a residential-property portfolio. It would not necessarily track your preferred home, suburb or the wider market exactly."],
+  ["Can the investment fall in value?", "Yes. Investment values can rise or fall and returns would not be guaranteed."],
+  ["Can I withdraw my money when I need it?", "Future withdrawal and liquidity terms would be set out in formal disclosure documents. People planning to buy soon should consider their need for accessible deposit funds."],
+  ["How quickly can I get started?", "You can build a Home Saver plan now. Residential-property investment functionality is coming soon and would remain subject to eligibility and formal product requirements."],
+  ["What does ‘9 minutes’ actually mean?", "The 9-minute concept refers to the approximate setup journey for gaining residential-property exposure once the investment product is available. It does not mean purchasing or owning an entire home in nine minutes."],
+  ["What does it cost?", "The current planning demo does not collect money. Any future product fees would be disclosed before a separate investment application."],
+  ["What happens when I’m ready to buy?", "You can review homes coming within reach and choose when to involve your broker, buyer’s agent, conveyancer or other advisers."],
+  ["How are homes selected for me?", "Home Saver compares active opportunities with your preferences and projected nine-month buying position. Results are indicative and availability is not guaranteed."],
+  ["When will the investment feature launch?", "A launch date has not been announced. You can join priority access to receive future updates."],
+];
+
+export function LandingPage() {
+  useEffect(() => trackEvent("landing_page_view"), []);
+  const start = () => {
+    trackEvent("start_plan");
+    trackEvent("onboarding_started");
+    trackEvent("LANDING_PRIMARY_CTA_CLICK");
+  };
+
+  return (
+    <main className="welcome merged-landing">
+      <nav className="welcome-nav">
+        <Logo />
+        <Link href="/sign-in" onClick={() => trackEvent("LANDING_SIGN_IN_CLICK")}>Sign in</Link>
+      </nav>
+
+      <section className="merge-hero">
+        <div className="merge-hero-copy">
+          <span className="hero-kicker">Home Saver</span>
+          <h1>{heroCopy.variants[heroCopy.active]}</h1>
+          <p className="nine-device">Get on the property ladder in around 9 minutes, not 9 years.</p>
+          <p className="merge-lead">Build your deposit, track your progress and see the homes coming within reach — with the option for eligible users to gain exposure to Australian residential property while they save.</p>
+          <div className="coming-label"><i />Property investment feature — coming soon</div>
+          <div className="hero-actions">
+            <Link className="button button-primary" href="/onboarding" onClick={start}>Build my Home Saver plan <Icon name="arrow" /></Link>
+            <a className="button button-secondary" href="#how-it-works">See how it works</a>
+          </div>
+          <p className="nine-clarifier">By “9 minutes”, we mean getting started with residential-property exposure through Home Saver once the investment feature is available — not purchasing a home.</p>
+        </div>
+        <HomeSaverPreview />
+      </section>
+
+      <section className="market-question">
+        <div><span className="eyebrow">A different path</span><h2>What if your deposit could participate in the property market too?</h2><p>Many aspiring buyers save their deposit largely in cash while the price of the home they hope to buy can continue to move.</p><p>Home Saver is being designed to give eligible users the option of gaining exposure to a diversified portfolio of Australian residential property while they continue saving for a home of their own.</p></div>
+        <div className="path-cards">
+          <article><small>Traditional path</small><h3>Cash savings</h3><p>Build deposit <b>→</b> eventually purchase property</p></article>
+          <article className="home-saver-path"><small>Home Saver path</small><h3>Cash + optional property exposure</h3><p>Build home goal assets <b>→</b> track buying capacity <b>→</b> discover homes <b>→</b> purchase when ready</p></article>
+        </div>
+        <p className="risk-strip"><Icon name="shield" />Investment values can rise or fall. Residential-property fund performance will not necessarily match the price of the particular home or suburb you ultimately want to buy.</p>
+      </section>
+
+      <section className="nine-section">
+        <span className="eyebrow">Property exposure earlier</span>
+        <h2>Get started with property exposure in around 9 minutes, not 9 years.</h2>
+        <p>A simple Home Saver journey can take you from setting up your plan to understanding how optional residential-property exposure could fit into your home-buying journey.</p>
+        <Link className="button button-primary" href="/investment-pledge">Join priority access <Icon name="arrow" /></Link>
+        <small>Coming soon. Investment eligibility, risks, fees and formal product terms would apply.</small>
+      </section>
+
+      <section className="merge-steps" id="how-it-works">
+        <div className="landing-heading"><span className="eyebrow">How Home Saver works</span><h2>Four steps towards owning.</h2><p>Start where you are. Home Saver helps you understand what comes next.</p></div>
+        <div>{steps.map(([title, copy], index) => <article key={title}><span>{index + 1}</span>{index === 1 && <small>Optional investment pathway</small>}<h3>{title}</h3><p>{copy}</p></article>)}</div>
+      </section>
+
+      <section className="more-than-save">
+        <div className="landing-heading"><span className="eyebrow">One connected journey</span><h2>More than a place to save.</h2></div>
+        <div>{benefits.map(([icon, title, copy]) => <article key={title}><span><Icon name={icon} /></span><h3>{title}</h3><p>{copy}</p></article>)}</div>
+      </section>
+
+      <section className="property-preview">
+        <div><span className="eyebrow">Matched opportunities</span><h2>See the homes coming within reach.</h2><p>Home Saver is not another generic property portal. It matches selected opportunities to where your finances may be heading over approximately the next nine months.</p><Link className="button button-primary" href="/onboarding" onClick={start}>Preview homes coming within reach <Icon name="arrow" /></Link></div>
+        <div className="preview-inventory">{inventory.map(([title, copy], index) => <article key={title}><div><Image src={`/property-${index + 1}.svg`} alt="Demonstration property" fill sizes="(max-width: 720px) 100vw, 320px" /></div><small>{title}</small><p>{copy}</p></article>)}</div>
+      </section>
+
+      <section className="research-trust">
+        <div><span className="eyebrow">Historical consumer research</span><h2>We started by asking aspiring homeowners what actually matters.</h2><p>Brickfloor previously surveyed 400 Australian renters aged 18–34 as part of its original Home Deposit Saver research.</p><small>This historical research informed early product exploration. It is not evidence of current or future investment performance.</small></div>
+        <div><span className="trust-mark"><Icon name="building" /></span><h2>Built by an Australian PropTech team with a track record.</h2><p>Home Saver is being developed by Brickfloor, the Australian property technology company behind the Market Price Guarantee.</p><small>Award and media logos will only be added when approved source assets and exact award descriptions are available.</small></div>
+      </section>
+
+      <section className="landing-faq">
+        <div className="landing-heading"><span className="eyebrow">Questions, answered clearly</span><h2>Home Saver FAQ</h2></div>
+        <div>{faqs.map(([question, answer]) => <details key={question}><summary>{question}<Icon name="chevron" /></summary><p>{answer}</p></details>)}</div>
+      </section>
+
+      <section className="merge-final">
+        <span className="eyebrow">Start with a plan</span><h2>Start building your path to home ownership.</h2><p>Understand where you stand today, what could come within reach next, and how Home Saver may help you participate in residential property along the way.</p>
+        <div className="hero-actions"><Link className="button button-primary" href="/onboarding" onClick={start}>Build my Home Saver plan</Link><Link className="button button-secondary" href="/investment-pledge">Join priority access</Link></div>
+      </section>
+
+      <footer className="landing-footer"><Logo /><p>Home Saver provides indicative planning information only. It is not financial, credit or property advice. Investing involves risk.</p><Link href="/onboarding" onClick={start}>Build my plan</Link></footer>
+    </main>
+  );
+}
+
+function HomeSaverPreview() {
+  return <div className="merge-phone"><div className="phone-top"><Logo /><span>•••</span></div><div className="phone-balance"><small>Your home goal assets</small><strong>$58,000</strong><span>Illustrative only</span></div><div className="phone-chart"><i /><i /><i /><i /><i /><i /></div><div className="phone-cards"><article><Icon name="home" /><span><small>Homes within reach</small><b>8 projected</b></span></article><article><Icon name="building" /><span><small>Property exposure</small><b>Coming soon</b></span></article></div><p><Icon name="sparkle" />Your next step: complete your plan</p></div>;
+}
