@@ -36,6 +36,15 @@ const inventory = [
   ["Brickfloor Opportunities", "Properties where Brickfloor has a Market Price Guarantee relationship and a Home Saver buyer may have a relevant opportunity."],
 ];
 
+const awards = [
+  { src: "/awards/Fintech Australia_Finnies Award_Finalist 2020.png", width: 1280, height: 1275, alt: "FinTech Australia Finnies 2020 finalist badge" },
+  { src: "/awards/Fintech Australia_Finnies Award_Finalist 2021.png", width: 6927, height: 6904, alt: "FinTech Australia Finnies 2021 finalist badge" },
+  { src: "/awards/Fintech Awards_Best PropTech Platform_2021.png", width: 500, height: 500, alt: "FinTech Awards 2021 winner badge" },
+  { src: "/awards/Proptech Association Australia_Most Innovative Proptech_2021_Award.png", width: 966, height: 1280, alt: "Proptech Awards 2021 Most Innovative Proptech Start-Up winner badge" },
+  { src: "/awards/Proptech Association Australia_Most Innovative Proptech_2022_Award.png", width: 1552, height: 2056, alt: "Proptech Awards 2022 Most Innovative Proptech Start-Up winner badge" },
+  { src: "/awards/Proptech Association Australia_Finalst Award 2023.png", width: 1920, height: 2543, alt: "Proptech Awards 2023 Ownership, Affordability and Finance finalist badge" },
+];
+
 const faqs = [
   ["Is this a bank account?", "No. Home Saver is a planning experience. The future Brickfloor Residential Fund would be an investment product, not a bank account or cash deposit."],
   ["Do I actually own a property?", "Not through the current Home Saver MVP. A future fund investment may provide exposure to a diversified residential-property portfolio, rather than ownership of an individual home."],
@@ -115,7 +124,12 @@ export function LandingPage() {
 
       <section className="research-trust">
         <div><span className="eyebrow">Historical consumer research</span><h2>We started by asking aspiring homeowners what actually matters.</h2><p>Brickfloor previously surveyed 400 Australian renters aged 18–34 as part of its original Home Deposit Saver research.</p><small>This historical research informed early product exploration. It is not evidence of current or future investment performance.</small></div>
-        <div><span className="trust-mark"><Icon name="building" /></span><h2>Built by an Australian PropTech team with a track record.</h2><p>Home Saver is being developed by Brickfloor, the Australian property technology company behind the Market Price Guarantee.</p><small>Award and media logos will only be added when approved source assets and exact award descriptions are available.</small></div>
+        <div><span className="trust-mark"><Icon name="building" /></span><h2>Built by an Australian PropTech team with a track record.</h2><p>Home Saver is being developed by Brickfloor, the Australian property technology company behind the Market Price Guarantee.</p></div>
+      </section>
+
+      <section className="landing-awards" aria-labelledby="awards-heading">
+        <div className="landing-heading"><span className="eyebrow">Brickfloor recognition</span><h2 id="awards-heading">Recognised by Australia’s fintech and PropTech communities.</h2><p>Genuine award and finalist badges received by Brickfloor.</p></div>
+        <div className="award-strip">{awards.map((award) => <figure key={award.src}><Image src={award.src} width={award.width} height={award.height} sizes="(max-width: 720px) 42vw, (max-width: 1100px) 25vw, 150px" alt={award.alt} /></figure>)}</div>
       </section>
 
       <section className="landing-faq">
